@@ -10,10 +10,9 @@
  * ab+ can be easily prosessed via stack
 */
 
-let input = '2*(3+(1+1)*2)-4/(2+2)'
+let input = '2*(3+(1+1)*2)-4/(2+2)+3*(1+1)/6'
 
-
-const processBrackets = (input) => {
+const findFirstBrackets = (input) => {
     let openBracketFlag = false;
     let closeBracketFlag = false;
     let i = 0
@@ -41,7 +40,34 @@ const processBrackets = (input) => {
     if (start === -1) {
         return { start, end, result: input}
     }
-    return { start, end, result: input.slice(start, end+1)}
+    return { input, start, end, result: input.slice(start, end+1)}
 }
 
-console.log(processBrackets(input))
+const findAllBrackets = (input) => {
+    const resultArray = []
+    let result = findFirstBrackets(input)
+    while (result.start > 0) {
+        const before = result.input.slice(0, result.start)
+        const after = result.input.slice(result.end+1)
+        resultArray.push(before)
+        resultArray.push(result.result)
+        result = findFirstBrackets(after)
+    }
+    return resultArray
+}
+
+const convertInArray = (input) => {
+    const result = []
+    const tempResult = findAllBrackets(input)
+
+    tempResult.forEach(element => {
+        if (element[0] === '(') {
+            //open brackets
+        } else {
+            result.concat(Array.from(element))
+        }
+    })
+    return tempResult
+}
+
+console.log(convertInArray(input))
