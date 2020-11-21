@@ -40,7 +40,7 @@ const findFirstBrackets = (input) => {
     if (start === -1) {
         return { start, end, result: input}
     }
-    return { input, start, end, result: input.slice(start, end+1)}
+    return { input, start, end, result: input.slice(start+1, end)}
 }
 
 const findAllBrackets = (input) => {
@@ -68,6 +68,29 @@ const convertInArray = (input) => {
         }
     })
     return tempResult
+}
+
+/**
+ * Use reverse polish record
+ * Example: a+b => ab+
+ * a+b*c
+ */
+const calculateSimpleExp = (input) => {
+    for (int i = 0;)
+}
+
+const stack = []
+stack.push(input)
+while(stack.length > 0) {
+    const element = stack.pop()
+    const input = element.result || element
+    const brackets = findFirstBrackets(input)
+    if (brackets.start > 0) {
+        stack.push(element)
+        stack.push(brackets)
+    } else {
+
+    }
 }
 
 console.log(convertInArray(input))
